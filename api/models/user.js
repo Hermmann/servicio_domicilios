@@ -1,11 +1,11 @@
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-let UserSchema = Schema({
-    name: {String, require: true},
-    surname: {String, require: true},
-    email: {String, require: true},
-    password: {String, require: true}
+const UserSchema = Schema({
+    name: {type: String, require: true},
+    surname: {type: String, require: true},
+    email: {type: String, require: true},
+    password: {type: String, require: true},
 });
 
 //This is for export the model for use it in another folders
