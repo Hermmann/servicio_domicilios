@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 //we charge the routes
-app.use('/api', user_routes);
+app.use('/api/', user_routes);
 
 
 module.exports = app;

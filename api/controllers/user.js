@@ -8,21 +8,55 @@ const createUser = async (req, res) => {
     try {
         const user = new User({name, surname, email, password});
         await user.save();
-        res.status(200).send(user);
+        res.status(201).send(user);
     } catch (error) {
         console.error(error);
         res.status(500).send(error);
 
     }
 }
-
+//Get a user based on the id or the email and password
 const getUser = async (req, res) => {
-    const userId = req.params.id;
+    const {id, email, password} = req.query;
+try {
 
-    const user = await User.findById(userId);
+    if (id != null) {
+
+        const user = await User.findById(id);
+        !user? res.status(404).send({message: 'The user doesnt exist'}) : res.status(200).send(user);
+        
+
+    }else if (email != null && password!=null) {
+        const pipeline = [
+            {$match: {"email":email, "password":password}}
+        ];
+
+
+        const user = await User.aggregate(pipeline);
+        // const user = await User.findOne({email: email, password: password});
+        // console.log(user.len);
+            user.len == undefined? res.status(404).send({message: 'The user doesnt exist'}) : res.status(200).send(user);
+    } else {
+        res.status(404).send({message:'There were not provide user id or email and password'})
+    }
+
+} catch (error) {
+    console.error(error);
+        res.status(500).send(error);
+    }
+}
+
+const getNumberUser = async (req, res)=> {
+ try {
+    const count = await User.countDocuments();
     
-    !user? res.status(404).send({message: 'The user doesnt exist'}) : res.send(user);
- 
+    
+    res.status(200).send({userNumber: count});
+
+ } catch (error) {
+    
+    res.status(500).send({message: 'server error'});
+ }
 }
 
 
@@ -62,5 +96,6 @@ const getUser = async (req, res) => {
 
 module.exports = {
     getUser,
-    createUser
+    createUser,
+    getNumberUser,
 }

@@ -9,6 +9,7 @@ let api = express.Router();
 //We create a route for the methods in our controllers
 
 api.get ('/user/:id', UserController.getUser);
-api.post('/user/', UserController.createUser);
+api.post('/user', UserController.createUser);
+api.get('/user', UserController.getNumberUser);
 
 module.exports = api;
