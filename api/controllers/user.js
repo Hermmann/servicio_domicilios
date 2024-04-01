@@ -27,15 +27,18 @@ try {
         
 
     }else if (email != null && password!=null) {
+        //console.log(password);
         const pipeline = [
-            {$match: {"email":email, "password":password}}
+            {$project: { _id:0,name:1, surname:1, email:1, password:1}},
+             {$match: {email:email}}
         ];
-
+        
 
         const user = await User.aggregate(pipeline);
+        //console.log(user);
         // const user = await User.findOne({email: email, password: password});
         // console.log(user.len);
-            user.len == undefined? res.status(404).send({message: 'The user doesnt exist'}) : res.status(200).send(user);
+            user== null? res.status(404).send({message: 'The user doesnt exist'}) : res.status(200).send(user);
     } else {
         res.status(404).send({message:'There were not provide user id or email and password'})
     }
