@@ -13,6 +13,8 @@ const user_routes = require('./routes/user');
 //we charge the routes
 app.use('/api/', user_routes);
 
+
+
 const port = 3800;
 
 // For let a indication to mongoose that I will make a connection with promises
