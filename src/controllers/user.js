@@ -28,7 +28,6 @@ const createUser = async (req, res) => {
     }
 }
 
-
 const getUser = async (req, res) => {
     const { id, email, password } = req.query;
 
