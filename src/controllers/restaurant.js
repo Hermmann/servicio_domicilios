@@ -52,8 +52,26 @@ const restaurants = async (req, res) => {
     }
 }
 
+const updateRestaurant = async (req, res) => {
+    if(Object.keys(req.body).length ===0 ) {
+        return res.status(400).send({message: "There is not data to update any restaurant"});
+    }
+
+    const id = req.params.id;
+    await RestaurantSchema.findByIdAndUpdate(id, req.body, {new: true})
+    .then((data => 
+        !data? res.status(404).send({message: "Restaurant not found"}) : 
+        res.status(200).json({message: "restaurant updated",data})))
+        .catch(() => { 
+            res.status(500).send({ message: "Error updated restaurant's fields" })
+        });
+
+        
+}
+
 module.exports = {
     createRestaurant,
     getRestaurant,
     restaurants,
+    updateRestaurant,
 }

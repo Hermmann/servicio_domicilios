@@ -85,10 +85,9 @@ const updateUser = async (req, res) => {
         return res.status(400).send({ message: "Data to update is empty" });
     }
 
-    const { id } = req.params;
-    const options = { new: true, runValidators: true };
-
-    await UserSchema.findByIdAndUpdate(id, req.body)
+    const  id  = req.params.id;
+   
+    await UserSchema.findByIdAndUpdate(id, req.body, {new:true})
         .then(data => {
             !data ? res.status(404).send({ message: "User not found." }) : res.send({ message: "Updated user", data });
         })
