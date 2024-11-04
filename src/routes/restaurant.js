@@ -8,4 +8,5 @@ router.post('/restaurants', RestaurantController.createRestaurant);
 router.get('/restaurants/:id', RestaurantController.getRestaurant);
 router.get('/restaurants',RestaurantController.restaurants)
 router.put('/restaurants/:id', RestaurantController.updateRestaurant);
+router.delete('/restaurants/:id', RestaurantController.deleteRestaurant);
 module.exports = router;

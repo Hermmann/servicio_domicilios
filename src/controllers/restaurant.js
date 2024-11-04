@@ -65,8 +65,15 @@ const updateRestaurant = async (req, res) => {
         .catch(() => { 
             res.status(500).send({ message: "Error updated restaurant's fields" })
         });
+}
 
-        
+const deleteRestaurant = async (req, res) => {
+    const id = req.params.id;
+    
+    await RestaurantSchema.findByIdAndDelete(id).then(data => {
+        !data? res.status(404).send({message: "Restaurant not found"}) : 
+        res.status(200).json({message: "Restaurant deleted", data});
+    })
 }
 
 module.exports = {
@@ -74,4 +81,5 @@ module.exports = {
     getRestaurant,
     restaurants,
     updateRestaurant,
+    deleteRestaurant,
 }
