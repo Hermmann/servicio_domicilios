@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const RestaurantSchema = require('../models/restaurant');
+const { message } = require('statuses');
 
 const createRestaurant = async (req, res) => {
     if (!req.body.name || !req.body.address || !req.body.category) {
@@ -34,18 +35,25 @@ const getRestaurant = async (req, res) => {
 }
 
 const restaurants = async (req, res) => {
-    const { category, nombre } = req.query;
+    const { category, name } = req.query;
     try {
-/*         if(category){
-            const restaurants [] = await RestaurantSchema.find;
-        } */
-
+        
+            const restaurants  = await RestaurantSchema.find({
+                $or: [
+                    {category: RegExp(category, 'i'), name: new RegExp(name, 'i')}
+                ]
+            })
+            
+            res.status(200).json(restaurants);
+        
     } catch (error) {
-
+        console.error(error);
+        res.status(500).json("Error fetching restaurants");
     }
 }
 
 module.exports = {
     createRestaurant,
     getRestaurant,
+    restaurants,
 }
