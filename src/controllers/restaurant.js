@@ -4,7 +4,7 @@ const { message } = require('statuses');
 
 const createRestaurant = async (req, res) => {
     if (!req.body.name || !req.body.address || !req.body.category) {
-        return res.status(400).send({ message: "Bad request" });
+        return res.status(400).send({ message: "¡missing fields like name, address or category!" });
     }
 
     try {

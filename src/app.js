@@ -10,10 +10,12 @@ app.use(express.json());
 //routes
 const user_routes = require('./routes/user');
 const restaurant_routes = require('./routes/restaurant');
+const product_routes = require('./routes/product')
 
 //we charge the routes
 app.use('/api/', user_routes);
 app.use('/api/', restaurant_routes);
+app.use('/api/', product_routes);
 
 
 const port = 3800;

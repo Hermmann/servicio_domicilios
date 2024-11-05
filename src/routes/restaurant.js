@@ -1,8 +1,7 @@
 const express = require('express');
 const RestaurantController = require('../controllers/restaurant');
-const { route } = require('./user');
 
-router = express.Router();
+const router = express.Router();
 
 router.post('/restaurants', RestaurantController.createRestaurant);
 router.get('/restaurants/:id', RestaurantController.getRestaurant);
