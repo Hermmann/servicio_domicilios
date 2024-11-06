@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose');
-const productSchema = require('../models/product');
+const ProductSchema = require('../models/product');
 
 const createProduct = async (req, res) => {
     const {name, description, price, restaurant_id, category} = req.body;
@@ -9,7 +9,7 @@ const createProduct = async (req, res) => {
     }
 
     try {
-        const product = new productSchema({name, description, price, restaurant_id, category});
+        const product = new ProductSchema({name, description, price, restaurant_id, category});
         await product.save();
         res.status(201).json(product);
 
@@ -25,7 +25,7 @@ const getProduct = async (req,res) => {
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).send({message: "The ID format is no valid"});
         }
-        const product = await productSchema.findById(id);
+        const product = await ProductSchema.findById(id);
         !product? res.status(404).send({message: "¡Product not found!"}) : res.status(200).json(product);
 
     } catch (error) {
@@ -34,7 +34,33 @@ const getProduct = async (req,res) => {
     }
 }
 
+const getProductsByRestaurantIdOrCategory = async (req,res) => {
+    const { category, restaurant_id } = req.query;
+    console.log(restaurant_id);
+    
+    try {    
+        const query = {};
+
+        if (category) {
+            query.category = { $regex: new RegExp(category, 'i') };
+        }
+        
+        if (restaurant_id) {
+            query.restaurant_id = restaurant_id;
+        }
+        
+        const products = await ProductSchema.find(query);
+            
+            res.status(200).json(products);
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json("Error fetching restaurants");
+    }
+}
+
 module.exports = {
     createProduct,
     getProduct,
+    getProductsByRestaurantIdOrCategory,
 }
