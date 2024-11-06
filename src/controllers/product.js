@@ -59,8 +59,32 @@ const getProductsByRestaurantIdOrCategory = async (req,res) => {
     }
 }
 
+const updateProduct = async (req, res) => {
+
+    const id = req.params.id;
+    await ProductSchema.findByIdAndUpdate(id, req.body, {new: true})
+    .then((data => 
+        !data? res.status(404).send({message: "Restaurant not found"}) : 
+        res.status(200).json({message: "restaurant updated",data})))
+        .catch(() => { 
+            res.status(500).send({ message: "Error updated restaurant's fields" })
+        });
+}
+
+const deleteProduct = async (req,res) => {
+    const id = req.params.id;
+    await ProductSchema.findByIdAndDelete(id).then(document => {
+        !document? res.status(404).send({message:"Product not fount"}) : 
+        res.status(200).send({message: "Product deleted", document})
+    }).catch(() => {
+        res.status(500).send({message: "Error deleting a product"});
+    });
+}
+
 module.exports = {
     createProduct,
     getProduct,
     getProductsByRestaurantIdOrCategory,
+    updateProduct,
+    deleteProduct,
 }
