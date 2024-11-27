@@ -9,9 +9,19 @@ const OrderSchema = Schema({
         default: 'Creado',
     },
     sendByUser: {type: Schema.Types.ObjectId, ref: 'User', require: true},
-    realizadoByUser: {type: Schema.Types.ObjectId, ref: 'User', require: true},
-    restauran_id: {type: Schema.Types.ObjectId, ref: 'Restaurant', require: true},
+    product: [{
+        //product_id: {type: Schema.Types.ObjectId, ref: 'Product'},
+        nombre: String,
+        cantidad: Number,
+    }],
+    deliveryAddress: {type: String, require: true},
+    realizadoByUser: {type: Schema.Types.ObjectId, ref: 'User'},
+    restaurant_id: {type: Schema.Types.ObjectId, ref: 'Restaurant', require: true},
+    creationDate:{ type: Date, default: Date.now},
+    updateDate: {type: Date, default: Date.now},
 })
+
+
 
 
 module.exports = mongoose.model('Order', OrderSchema);

@@ -5,7 +5,8 @@ const createProduct = async (req, res) => {
     const {name, description, price, restaurant_id, category} = req.body;
 
     if (!name || !price || !restaurant_id || !category) {
-        return res.status(400).send({message: "Missing like name, price, ID of the restaurant or category"});
+        return res.status(400)
+        .send({message: "Missing like name, price, ID of the restaurant or category"});
     }
 
     try {
