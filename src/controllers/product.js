@@ -15,7 +15,7 @@ const createProduct = async (req, res) => {
         res.status(201).json(product);
 
     } catch (error) {
-        console.error.log(error);
+        console.error(error);
         res.status(500).send({message: "Error while creating a product"});
     }
 }
@@ -30,7 +30,7 @@ const getProduct = async (req,res) => {
         !product? res.status(404).send({message: "¡Product not found!"}) : res.status(200).json(product);
 
     } catch (error) {
-        console.error.log(error);
+        console.error(error);
         res.status(500).send({message: error});
     }
 }
