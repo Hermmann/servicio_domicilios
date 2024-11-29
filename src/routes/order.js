@@ -4,8 +4,8 @@ const OrderController = require('../controllers/order');
 const router = express.Router();
 
 router.post('/orders', OrderController.createOrder);
-router.get('/orders/:id', OrderController.getOrderById);
+router.get('/orders/order/:id', OrderController.getOrderById);
 router.get('/orders', OrderController.getOrdersByRealizedOrSendByUserOrRestaurantBetweenDates);
-
+router.get('/orders/order', OrderController.getSinAceptarOrders);
 
 module.exports = router;

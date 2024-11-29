@@ -49,7 +49,7 @@ const getOrdersByRealizedOrSendByUserOrRestaurantBetweenDates = async (req, res)
     
     try {
         const query = {}
-
+    
         if (realizedByUser) {
             query.realizadoByUser = realizedByUser;
         }
@@ -80,11 +80,29 @@ const getOrdersByRealizedOrSendByUserOrRestaurantBetweenDates = async (req, res)
         console.error(error);
         res.status(500).json("Error fetching order");
     }
+}
 
+const getSinAceptarOrders = async (req, res) => {
+    
+    try {
+        
+        const sinAceptarOrders = await OrderSchema.find({state : { $ne: 'Aceptado'}});
+        
+        if (!sinAceptarOrders) {
+            return res.status(404).send({message: "Todas los pedidos fueron aceptados"});
+        }
+
+        res.status(200).json(sinAceptarOrders);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json("Error buscando ordenes sin aceptar");
+    }
 }
 
 module.exports = {
     createOrder,
     getOrderById,
     getOrdersByRealizedOrSendByUserOrRestaurantBetweenDates,
+    getSinAceptarOrders
 }
