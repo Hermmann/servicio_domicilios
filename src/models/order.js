@@ -11,12 +11,12 @@ const OrderSchema = Schema({
     sendByUser: {type: Schema.Types.ObjectId, ref: 'User', require: true},
     product: [{
         //product_id: {type: Schema.Types.ObjectId, ref: 'Product'},
-        nombre: String,
-        cantidad: Number,
+        name: String,
+        amount: Number,
     }],
     deliveryAddress: {type: String, require: true},
     realizadoByUser: {type: Schema.Types.ObjectId, ref: 'User'},
-    restaurant_id: {type: Schema.Types.ObjectId, ref: 'Restaurant', require: true},
+    restaurant_id: {type: Schema.Types.ObjectId, ref: 'Restaurant'},
     creationDate:{ type: Date, default: Date.now},
     updateDate: {type: Date, default: Date.now},
 })
