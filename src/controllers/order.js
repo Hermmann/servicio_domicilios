@@ -162,6 +162,18 @@ const updateOrder = async (req, res) => {
     }
 };
 
+const deleteOrder = async (req, res) => {
+    const id = req.params.id;
+
+    await OrderSchema.findByIdAndDelete(id).then(data => {
+        !data ? res.status(404).send({ message: "Order not found" }) :
+            res.status(200).json({ message: "Order deleted", data })
+    }).catch(() => {
+        res.status(500).send({ message: "Server error" })
+    });
+}
+
+
 
 
 
@@ -171,4 +183,5 @@ module.exports = {
     getOrdersByRealizedOrSendByUserOrRestaurantBetweenDates,
     getSinAceptarOrders,
     updateOrder,
+    deleteOrder,
 }
