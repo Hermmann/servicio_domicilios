@@ -19,9 +19,9 @@ const OrderSchema = Schema({
     restaurant_id: {type: Schema.Types.ObjectId, ref: 'Restaurant'},
     creationDate:{ type: Date, default: Date.now},
     updateDate: {type: Date, default: Date.now},
-})
+},
+{ timestamps: { createdAt: 'creationDate', updatedAt: 'updateDate' } }
+)
                     
-
-
 
 module.exports = mongoose.model('Order', OrderSchema);
