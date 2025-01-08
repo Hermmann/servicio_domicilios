@@ -3,26 +3,29 @@ const UserSchema = require('../models/user');
 
 const createUser = async (req, res) => {
 
-    if (!req.body.name || !req.body.surname || !req.body.email || !req.body.password) {
+    if (!req.body.name || !req.body.surname 
+        || !req.body.email || !req.body.password 
+        || !req.body.role||!req.body.phone) {
+
         return res.status(400).send({ message: "Missing parameters like name, surname, email or password" });
     }
     try {
-        const { name, surname, email, password } = req.body;
-        const user = new UserSchema({ name, surname, email, password });
-        
+        const { name, surname, email, password, role, phone } = req.body;
+        const user = new UserSchema({ name, surname, email, password, role, phone });
+        console.log("erer "+req.body.phone);
         await user.save().then(data => res.status(201).send(user))
             .catch(error => 
-                /*11000 is E11000 o Error 11000.
+                /*11000 is E11000 o Error 11000.        
                  An error code that appears 
                  when there is an attempt to enter an existing value or field, 
                 In this case same email*/
                 error.code === 11000? res.status(400).send({message: `¡${email} already exist!`})     :
                 res.status(400).send({message: error.errors.email.message})
             );
-
+                
     } catch (error) {
-        
-        console.error(error.code);
+
+        console.error(error);
         res.status(500).json({ message: "Internal server error." });
 
     }
